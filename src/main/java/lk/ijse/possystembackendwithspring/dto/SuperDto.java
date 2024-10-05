@@ -1,4 +1,4 @@
 package lk.ijse.possystembackendwithspring.dto;
 
-public class UserDto {
+public interface SuperDto {
 }
