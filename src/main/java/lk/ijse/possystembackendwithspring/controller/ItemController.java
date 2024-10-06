@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:63342")
 @RestController
 @RequestMapping("api/v1/item")
@@ -38,12 +41,14 @@ public class ItemController {
         return "Success";
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public void getItemList(){
+    public List<ItemDto> getItemList(){
+        return itemService.getItemList();
 
 
     }
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void updateItem(){
+
 
 
 
