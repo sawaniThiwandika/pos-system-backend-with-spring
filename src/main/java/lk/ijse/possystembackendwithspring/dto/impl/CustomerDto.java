@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class CustomerDto implements Serializable {
     private String cusId;
     private String cusName;

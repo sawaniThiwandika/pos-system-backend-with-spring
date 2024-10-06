@@ -8,12 +8,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetailsDto {
-        private String _orderId ;
-        private String _itemCode;
-        private int _qty;
-        private double _unitPrice;
-        private double _total;
-        private String _itemName;
+        private int id;
+        private String orderId;
+        private String itemCode;
+        private int qty;
+        private double unitPrice;
+        private double total;
+        private String itemName;
 
 
 }

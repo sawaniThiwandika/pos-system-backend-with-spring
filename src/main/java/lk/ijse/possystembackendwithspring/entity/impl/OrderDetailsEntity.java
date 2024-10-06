@@ -15,7 +15,7 @@ public class OrderDetailsEntity implements SuperEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "orderId", nullable = false)

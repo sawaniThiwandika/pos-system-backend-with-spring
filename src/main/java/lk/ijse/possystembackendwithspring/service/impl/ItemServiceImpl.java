@@ -3,7 +3,6 @@ package lk.ijse.possystembackendwithspring.service.impl;
 import jakarta.transaction.Transactional;
 import lk.ijse.possystembackendwithspring.dao.ItemDao;
 import lk.ijse.possystembackendwithspring.dto.impl.ItemDto;
-import lk.ijse.possystembackendwithspring.entity.impl.CustomerEntity;
 import lk.ijse.possystembackendwithspring.entity.impl.ItemEntity;
 import lk.ijse.possystembackendwithspring.service.ItemService;
 import lk.ijse.possystembackendwithspring.util.AppUtil;
@@ -24,6 +23,7 @@ public class ItemServiceImpl implements ItemService {
     Mapping mapping;
     @Override
     public void saveItem(ItemDto dto) {
+
         ItemEntity itemEntity = mapping.toItemEntity(dto);
         itemEntity.setItemOrderDetails(new ArrayList<>());
         itemEntity.setItemCode(AppUtil.generateItemCode());

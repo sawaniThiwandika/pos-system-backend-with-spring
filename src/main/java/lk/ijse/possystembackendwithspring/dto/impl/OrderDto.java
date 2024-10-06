@@ -9,11 +9,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDto {
-    private String _customer;
-    private String _date;
-    private double _total;
-    private List<OrderDetailsDto> _itemListOrder;
-    private String _id;
+    private CustomerDto customer;
+    private String date;
+    private double total;
+    private List<OrderDetailsDto> itemListOrder;
+    private String id;
 
 
 }
