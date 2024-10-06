@@ -17,10 +17,10 @@ import java.util.List;
 public class ItemEntity implements SuperEntity {
     @Id
     private String itemCode;
-    private String unitPrice;
-    private String category;
+    private double itemUnitPrice;
+    private String itemCategory;
     private String itemName;
-    private String itemQty;
+    private int itemQty;
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<OrderDetailsEntity> orderDetails;
+    private List<OrderDetailsEntity> itemOrderDetails;
 }
