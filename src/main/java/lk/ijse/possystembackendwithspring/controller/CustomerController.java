@@ -70,6 +70,7 @@ public class CustomerController {
     }
     @DeleteMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteCustomer(@PathVariable("customerId") String cusId){
+        customerService.deleteCustomer(cusId);
 
     }
 }

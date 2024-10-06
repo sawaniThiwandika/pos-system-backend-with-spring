@@ -45,8 +45,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public String deleteCustomer(String id) {
-        return null;
+    public void deleteCustomer(String id) {
+        Optional<CustomerEntity> existedUser = customerDao.findById(id);
+        if(!existedUser.isPresent()){
+            //throw new UserNotFoundException("User with id " + userId + " not found");
+        }else {
+            customerDao.deleteById(id);
+        }
+
     }
 
     @Override
