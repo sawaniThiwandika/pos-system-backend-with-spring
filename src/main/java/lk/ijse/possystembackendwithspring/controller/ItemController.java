@@ -67,7 +67,6 @@ public class ItemController {
     }
     @DeleteMapping(value = "/{itemCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteItem(@PathVariable("itemCode") String itemCode){
-
-
+        itemService.deleteItem(itemCode);
     }
 }
