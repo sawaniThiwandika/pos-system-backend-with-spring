@@ -47,8 +47,20 @@ public class ItemController {
 
     }
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void updateItem(){
+    public void updateItem(@RequestPart("_itemCode") String itemCode,
+                           @RequestPart("_unitPrice") String unitPrice,
+                           @RequestPart("_category")String category,
+                           @RequestPart("_itemName")String itemName,
+                           @RequestPart("_itemQty") String itemQty){
 
+        ItemDto itemDto = new ItemDto();
+        itemDto.setItemName(itemName);
+        itemDto.setItemCode(itemCode);
+        itemDto.setItemQty(Integer.valueOf(itemQty));
+        itemDto.setCategory(category);
+        itemDto.setUnitPrice(Double.valueOf(unitPrice));
+        System.out.println(itemDto);
+        itemService.updateItem(itemCode,itemDto);
 
 
 

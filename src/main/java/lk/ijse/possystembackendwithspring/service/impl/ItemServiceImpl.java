@@ -3,6 +3,7 @@ package lk.ijse.possystembackendwithspring.service.impl;
 import jakarta.transaction.Transactional;
 import lk.ijse.possystembackendwithspring.dao.ItemDao;
 import lk.ijse.possystembackendwithspring.dto.impl.ItemDto;
+import lk.ijse.possystembackendwithspring.entity.impl.CustomerEntity;
 import lk.ijse.possystembackendwithspring.entity.impl.ItemEntity;
 import lk.ijse.possystembackendwithspring.service.ItemService;
 import lk.ijse.possystembackendwithspring.util.AppUtil;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -32,7 +34,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void updateItem(String itemCode, ItemDto dto) {
-
+        Optional<ItemEntity> tmpUser = itemDao.findById(itemCode);
+        if(tmpUser.isPresent()) {
+            tmpUser.get().setItemName(dto.getItemName());
+            tmpUser.get().setItemCategory(dto.getCategory());
+            tmpUser.get().setItemQty(dto.getItemQty());
+            tmpUser.get().setItemUnitPrice(dto.getUnitPrice());
+        }
 
     }
 
