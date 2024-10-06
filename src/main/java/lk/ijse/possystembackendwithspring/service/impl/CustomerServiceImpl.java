@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -33,7 +34,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void updateCustomer(String cusId, CustomerDto dto) {
-
+        Optional<CustomerEntity> tmpUser = customerDao.findById(cusId);
+        if(tmpUser.isPresent()) {
+            tmpUser.get().setCusName(dto.getCusName());
+            tmpUser.get().setCusContact(dto.getCusContact());
+            tmpUser.get().setCusEmail(dto.getCusEmail());
+            tmpUser.get().setCusAddress(dto.getCusAddress());
+            tmpUser.get().setAddCusDate(dto.getAddCusDate());
+        }
     }
 
     @Override
