@@ -1,5 +1,7 @@
 package lk.ijse.possystembackendwithspring;
 
+import jakarta.servlet.MultipartConfigElement;
+import jakarta.servlet.ServletRegistration;
 import lk.ijse.possystembackendwithspring.configuration.WebAppConfig;
 import lk.ijse.possystembackendwithspring.configuration.WebAppRootConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -19,5 +21,10 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        String tempdir = System.getProperty("java.io.tmpdir");
+        registration.setMultipartConfig(new MultipartConfigElement(tempdir));
     }
 }

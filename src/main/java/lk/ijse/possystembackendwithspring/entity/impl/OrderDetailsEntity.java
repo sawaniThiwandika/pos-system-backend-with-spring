@@ -1,6 +1,7 @@
 package lk.ijse.possystembackendwithspring.entity.impl;
 
 import jakarta.persistence.*;
+import lk.ijse.possystembackendwithspring.entity.SuperEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Table(name = "order_details")
-public class OrderDetailsEntity {
+public class OrderDetailsEntity implements SuperEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,8 @@ public class OrderDetailsEntity {
     @ManyToOne
     @JoinColumn(name = "itemCode", nullable = false)
     private ItemEntity item;
-
-    private int quantity;
+    private double unitPrice;
+    private double total;
+    private String itemName;
+    private int qty;
 }

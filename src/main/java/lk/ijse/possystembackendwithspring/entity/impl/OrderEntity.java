@@ -1,6 +1,7 @@
 package lk.ijse.possystembackendwithspring.entity.impl;
 
 import jakarta.persistence.*;
+import lk.ijse.possystembackendwithspring.entity.SuperEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,17 +12,17 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Table(name = "orders")
-public class OrderEntity {
+public class OrderEntity implements SuperEntity {
     @Id
-    private String orderId;
+    private String id;
 
     @ManyToOne
-    @JoinColumn(name = "customerId", nullable = false)
+    @JoinColumn(name = "customer", nullable = false)
     private CustomerEntity customer;
 
     private double total;
     private String date;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<OrderDetailsEntity> orderDetails;
+    private List<OrderDetailsEntity> itemListOrder;
 }
