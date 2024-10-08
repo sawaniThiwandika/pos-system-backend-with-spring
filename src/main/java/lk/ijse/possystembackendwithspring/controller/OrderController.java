@@ -6,9 +6,10 @@ import lk.ijse.possystembackendwithspring.dto.impl.OrderDetailsDto;
 import lk.ijse.possystembackendwithspring.dto.impl.OrderDto;
 import lk.ijse.possystembackendwithspring.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();  // Jackson ObjectMapper for parsing JSON
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void placeOrder(@RequestPart("_customer") String customerJson,
@@ -29,12 +30,12 @@ public class OrderController {
                            @RequestPart("_itemListOrder") String itemListJson,
                            @RequestPart("_id") String id) throws IOException {
 
-        // Parse the JSON strings back into the corresponding DTO objects
+
         CustomerDto customer = objectMapper.readValue(customerJson, CustomerDto.class);
         ArrayList<OrderDetailsDto> itemList = objectMapper.readValue(itemListJson,
                 objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, OrderDetailsDto.class));
         System.out.println("Json"+customerJson);
-        // Process the order details here...
+
         System.out.println("Order ID: " + id);
         System.out.println("Customer: " + customer);
         System.out.println("Date: " + date);
@@ -55,10 +56,15 @@ public class OrderController {
 
 
     }
-    @GetMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public MultipartFile getAllOrders(){
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<OrderDto>> getAllOrders() {
         List<OrderDto> orderList = orderService.getOrderList();
 
+        if (orderList != null && !orderList.isEmpty()) {
+            return ResponseEntity.ok(orderList);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
     }
 
 }
