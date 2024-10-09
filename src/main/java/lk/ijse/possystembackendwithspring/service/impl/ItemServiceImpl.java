@@ -48,7 +48,7 @@ public class ItemServiceImpl implements ItemService {
     public void deleteItem(String itemCode) {
         Optional<ItemEntity> existedUser = itemDao.findById(itemCode);
         if(!existedUser.isPresent()){
-            //throw new UserNotFoundException("User with id " + userId + " not found");
+
         }else {
             itemDao.deleteById(itemCode);
         }
@@ -57,7 +57,14 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto getItem(String itemCode) {
-        return null;
+
+        Optional<ItemEntity> itemEntityOptional = itemDao.findById(itemCode);
+
+        if (itemEntityOptional.isPresent()) {
+            return mapping.toItemDto(itemEntityOptional.get());
+        } else {
+            throw new RuntimeException("Item with code " + itemCode + " not found");
+        }
     }
 
     @Override
