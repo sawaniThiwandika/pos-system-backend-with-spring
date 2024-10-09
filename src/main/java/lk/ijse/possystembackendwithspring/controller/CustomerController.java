@@ -2,11 +2,15 @@ package lk.ijse.possystembackendwithspring.controller;
 
 import lk.ijse.possystembackendwithspring.dto.impl.CustomerDto;
 import lk.ijse.possystembackendwithspring.service.CustomerService;
+import org.hibernate.usertype.LoggableUserType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,6 +20,7 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     CustomerService customerService;
+   static Logger logger=LoggerFactory.getLogger(CustomerController.class);
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> saveCustomer(@RequestPart("_cusId") String cusId,
                                                @RequestPart("_cusName") String cusName,
@@ -23,6 +28,8 @@ public class CustomerController {
                                                @RequestPart("_cusAddress")String cusAddress,
                                                @RequestPart("_cusContact") String cusContact,
                                                @RequestPart("_addCusDate") String addCusDate ){
+       logger.info("Run the Post method in customer controller");
+        logger.trace("init");
 
         CustomerDto customerDto = new CustomerDto();
         customerDto.setAddCusDate(String.valueOf(LocalDate.now()));
@@ -45,6 +52,8 @@ public class CustomerController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerDto> getCustomerList(){
         List<CustomerDto> customerList = customerService.getCustomerList();
+        logger.info("Run the Get All method in customer controller");
+        logger.trace("init");
         return customerList;
 
     }
