@@ -138,3 +138,24 @@
 2024-10-16 18:52:08.350 [RMI TCP Connection(3)-127.0.0.1] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2024-10-16 18:52:59.976 [http-nio-8080-exec-1] INFO  l.i.p.controller.CustomerController - Run the Get All method in customer controller
 2024-10-16 18:53:00.241 [http-nio-8080-exec-3] INFO  l.i.p.controller.CustomerController - Run the Get All method in customer controller
+2024-10-16 19:19:02.238 [RMI TCP Connection(3)-127.0.0.1] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-16 19:19:02.306 [RMI TCP Connection(3)-127.0.0.1] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-10-16 19:19:02.344 [RMI TCP Connection(3)-127.0.0.1] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-10-16 19:19:04.378 [RMI TCP Connection(3)-127.0.0.1] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-16 19:19:05.381 [RMI TCP Connection(3)-127.0.0.1] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-16 19:19:05.384 [RMI TCP Connection(3)-127.0.0.1] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-10-16 19:19:05.518 [RMI TCP Connection(3)-127.0.0.1] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-16 19:19:14.619 [http-nio-8080-exec-3] INFO  l.i.p.controller.CustomerController - Run the Get All method in customer controller
+2024-10-16 19:19:15.503 [http-nio-8080-exec-4] INFO  l.i.p.controller.CustomerController - Run the Get All method in customer controller
+2024-10-16 20:28:47.314 [http-nio-8080-exec-8] INFO  l.i.p.controller.CustomerController - Run the Get All method in customer controller
+2024-10-16 20:28:53.319 [http-nio-8080-exec-10] INFO  l.i.p.controller.CustomerController - Run the Get All method in customer controller
+2024-10-16 20:51:43.728 [RMI TCP Connection(2)-127.0.0.1] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-16 20:51:43.817 [RMI TCP Connection(2)-127.0.0.1] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-10-16 20:51:43.859 [RMI TCP Connection(2)-127.0.0.1] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-10-16 20:51:46.139 [RMI TCP Connection(2)-127.0.0.1] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-16 20:51:47.173 [RMI TCP Connection(2)-127.0.0.1] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-16 20:51:47.176 [RMI TCP Connection(2)-127.0.0.1] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-10-16 20:51:47.326 [RMI TCP Connection(2)-127.0.0.1] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-16 20:51:54.714 [http-nio-8080-exec-1] INFO  l.i.p.controller.CustomerController - Run the Get All method in customer controller
+2024-10-16 20:51:57.961 [http-nio-8080-exec-4] INFO  l.i.p.controller.CustomerController - Run the Get All method in customer controller
+2024-10-16 20:52:15.519 [http-nio-8080-exec-7] INFO  l.i.p.controller.CustomerController - Run the Get All method in customer controller
