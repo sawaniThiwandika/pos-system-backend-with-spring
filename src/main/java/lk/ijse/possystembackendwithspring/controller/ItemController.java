@@ -24,6 +24,26 @@ public class ItemController {
                                                @RequestPart("_category")String category,
                                                @RequestPart("_itemName")String itemName,
                                                @RequestPart("_itemQty") String itemQty){
+
+        String unitPricePattern = "^\\d+(\\.\\d{1,2})?$";
+        String categoryPattern = "^[a-zA-Z0-9\\s]+$";
+        String itemNamePattern = "^[a-zA-Z\\s]+$";
+        String itemQtyPattern = "^\\d+$";
+
+
+        if (unitPrice == null || !unitPrice.matches(unitPricePattern)) {
+            return ResponseEntity.badRequest().body("Invalid unit price");
+        }
+        if (category == null || !category.matches(categoryPattern)) {
+            return ResponseEntity.badRequest().body("Invalid category");
+        }
+        if (itemName == null || !itemName.matches(itemNamePattern)) {
+            return ResponseEntity.badRequest().body("Invalid item name");
+        }
+        if (itemQty == null || !itemQty.matches(itemQtyPattern)) {
+            return ResponseEntity.badRequest().body("Invalid item quantity");
+        }
+
         try {
             int qty;
             double price;
@@ -84,6 +104,31 @@ public class ItemController {
                                              @RequestPart("_itemName") String itemName,
                                              @RequestPart("_itemQty") String itemQty) {
 
+        String regexForUserID = "^Item[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
+        String unitPricePattern = "^\\d+(\\.\\d{1,2})?$";
+        String categoryPattern = "^[a-zA-Z0-9\\s]+$";
+        String itemNamePattern = "^[a-zA-Z\\s]+$";
+        String itemQtyPattern = "^\\d+$";
+
+        Pattern regexPattern = Pattern.compile(regexForUserID);
+        var regexMatcher = regexPattern.matcher(itemCode);
+        if (!regexMatcher.matches()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (unitPrice == null || !unitPrice.matches(unitPricePattern)) {
+            return ResponseEntity.badRequest().body("Invalid unit price");
+        }
+        if (category == null || !category.matches(categoryPattern)) {
+            return ResponseEntity.badRequest().body("Invalid category");
+        }
+        if (itemName == null || !itemName.matches(itemNamePattern)) {
+            return ResponseEntity.badRequest().body("Invalid item name");
+        }
+        if (itemQty == null || !itemQty.matches(itemQtyPattern)) {
+            return ResponseEntity.badRequest().body("Invalid item quantity");
+        }
+
         ItemDto itemDto = new ItemDto();
         itemDto.setItemName(itemName);
         itemDto.setItemCode(itemCode);
@@ -92,14 +137,7 @@ public class ItemController {
         itemDto.setUnitPrice(Double.valueOf(unitPrice));
         System.out.println(itemDto);
 
-
-        String regexForUserID = "^Item[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForUserID);
-        var regexMatcher = regexPattern.matcher(itemCode);
         try {
-            if (!regexMatcher.matches() || itemDto == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
             itemService.updateItem(itemCode, itemDto);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (ItemNotFoundException e) {
@@ -120,7 +158,7 @@ public class ItemController {
         var regexMatcher = regexPattern.matcher(itemCode);
 
         try {
-            if (!regexMatcher.matches()) {
+            if (itemCode==null||!regexMatcher.matches()) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             itemService.deleteItem(itemCode);
