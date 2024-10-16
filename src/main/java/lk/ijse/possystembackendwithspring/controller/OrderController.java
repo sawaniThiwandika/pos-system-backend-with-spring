@@ -25,11 +25,23 @@ public class OrderController {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void placeOrder(@RequestPart("_customer") String customerJson,
-                           @RequestPart("_date") String date,
-                           @RequestPart("_total") String total,
-                           @RequestPart("_itemListOrder") String itemListJson,
-                           @RequestPart("_id") String id) throws IOException {
+    public ResponseEntity<String> placeOrder(@RequestPart("_customer") String customerJson,
+                                             @RequestPart("_date") String date,
+                                             @RequestPart("_total") String total,
+                                             @RequestPart("_itemListOrder") String itemListJson,
+                                             @RequestPart("_id") String id) throws IOException {
+
+        String totalPattern = "^\\d+(\\.\\d{1,2})?$";
+
+        if (customerJson == null || customerJson.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer is missing");
+        }
+        if (total == null || !total.matches(totalPattern)) {
+            return ResponseEntity.badRequest().body("Invalid total amount ");
+        }
+        if (itemListJson == null || itemListJson.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Item list is missing");
+        }
 
 
         CustomerDto customer = objectMapper.readValue(customerJson, CustomerDto.class);
@@ -51,10 +63,11 @@ public class OrderController {
         orderDto.setTotal(Double.valueOf(total));
         try {
             orderService.placeOrder(orderDto);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
 
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
