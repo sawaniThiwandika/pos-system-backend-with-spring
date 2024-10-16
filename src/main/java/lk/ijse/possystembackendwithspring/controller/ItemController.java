@@ -3,6 +3,8 @@ package lk.ijse.possystembackendwithspring.controller;
 import lk.ijse.possystembackendwithspring.dto.impl.ItemDto;
 import lk.ijse.possystembackendwithspring.exception.ItemNotFoundException;
 import lk.ijse.possystembackendwithspring.service.ItemService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +20,7 @@ import java.util.regex.Pattern;
 public class ItemController {
     @Autowired
     ItemService itemService;
+    static Logger logger= LoggerFactory.getLogger(ItemController.class);
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> saveItem(@RequestPart("_itemCode") String itemCode,
                                                @RequestPart("_unitPrice") String unitPrice,

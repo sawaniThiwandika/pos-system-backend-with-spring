@@ -1,6 +1,7 @@
 package lk.ijse.possystembackendwithspring.service.impl;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.possystembackendwithspring.controller.ItemController;
 import lk.ijse.possystembackendwithspring.dao.CustomerDao;
 import lk.ijse.possystembackendwithspring.dto.impl.CustomerDto;
 import lk.ijse.possystembackendwithspring.entity.impl.CustomerEntity;
@@ -10,6 +11,8 @@ import lk.ijse.possystembackendwithspring.service.CustomerService;
 import lk.ijse.possystembackendwithspring.util.AppUtil;
 import lk.ijse.possystembackendwithspring.util.Mapping;
 import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -17,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -27,6 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     CustomerDao customerDao;
     @Autowired
     private Mapping mapping;
+    static Logger logger= LoggerFactory.getLogger(CustomerServiceImpl.class);
     @Override
     public void saveCustomer(CustomerDto dto) {
         try {

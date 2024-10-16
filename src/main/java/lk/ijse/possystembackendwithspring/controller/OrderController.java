@@ -5,6 +5,8 @@ import lk.ijse.possystembackendwithspring.dto.impl.CustomerDto;
 import lk.ijse.possystembackendwithspring.dto.impl.OrderDetailsDto;
 import lk.ijse.possystembackendwithspring.dto.impl.OrderDto;
 import lk.ijse.possystembackendwithspring.service.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +23,7 @@ import java.util.List;
 public class OrderController {
     @Autowired
     OrderService orderService;
-
+    static Logger logger= LoggerFactory.getLogger(OrderController.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

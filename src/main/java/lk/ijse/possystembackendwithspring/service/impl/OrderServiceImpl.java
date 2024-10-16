@@ -15,6 +15,8 @@ import lk.ijse.possystembackendwithspring.service.ItemService;
 import lk.ijse.possystembackendwithspring.service.OrderService;
 import lk.ijse.possystembackendwithspring.util.AppUtil;
 import lk.ijse.possystembackendwithspring.util.Mapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
     CustomerDao customerDao;
     @Autowired
     ItemService itemService;
+    static Logger logger= LoggerFactory.getLogger(OrderServiceImpl.class);
     @Override
     public void placeOrder(OrderDto dto) {
 

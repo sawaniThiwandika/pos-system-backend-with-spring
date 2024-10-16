@@ -9,6 +9,8 @@ import lk.ijse.possystembackendwithspring.exception.ItemNotFoundException;
 import lk.ijse.possystembackendwithspring.service.ItemService;
 import lk.ijse.possystembackendwithspring.util.AppUtil;
 import lk.ijse.possystembackendwithspring.util.Mapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class ItemServiceImpl implements ItemService {
     ItemDao itemDao;
     @Autowired
     Mapping mapping;
+    static Logger logger= LoggerFactory.getLogger(ItemServiceImpl.class);
     @Override
     public void saveItem(ItemDto dto) {
 
