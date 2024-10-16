@@ -48,9 +48,25 @@ public class ItemController {
 
     }
     @GetMapping(value = "/{itemCode}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getItem(@PathVariable ("itemCode") String itemCode){
+    public ItemDto getItem(@PathVariable ("itemCode") String itemCode) {
+        String regexForUserID = "^Item[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForUserID);
+        var regexMatcher = regexPattern.matcher(itemCode);
+        try {
+            if (!regexMatcher.matches()) {
+                new ItemNotFoundException("Invalid Item code "+itemCode);
+                return null;
+            }
+            ItemDto item = itemService.getItem(itemCode);
+            return item;
 
-        return "Success";
+        }
+        catch (Exception e){
+            e.printStackTrace();
+           return null;
+        }
+
+
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
