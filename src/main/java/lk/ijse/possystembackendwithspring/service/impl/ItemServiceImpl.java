@@ -4,10 +4,13 @@ import jakarta.transaction.Transactional;
 import lk.ijse.possystembackendwithspring.dao.ItemDao;
 import lk.ijse.possystembackendwithspring.dto.impl.ItemDto;
 import lk.ijse.possystembackendwithspring.entity.impl.ItemEntity;
+import lk.ijse.possystembackendwithspring.exception.CustomerNotFoundException;
+import lk.ijse.possystembackendwithspring.exception.ItemNotFoundException;
 import lk.ijse.possystembackendwithspring.service.ItemService;
 import lk.ijse.possystembackendwithspring.util.AppUtil;
 import lk.ijse.possystembackendwithspring.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,11 +27,23 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void saveItem(ItemDto dto) {
 
-        ItemEntity itemEntity = mapping.toItemEntity(dto);
-        itemEntity.setItemOrderDetails(new ArrayList<>());
-        itemEntity.setItemCode(AppUtil.generateItemCode());
-        System.out.println("Item Entity :"+itemEntity);
-        itemDao.save(itemEntity);
+        try {
+            ItemEntity itemEntity = mapping.toItemEntity(dto);
+            itemEntity.setItemOrderDetails(new ArrayList<>());
+            itemEntity.setItemCode(AppUtil.generateItemCode());
+            System.out.println("Item Entity :"+itemEntity);
+            itemDao.save(itemEntity);
+        }
+        catch (DataAccessException e){
+            System.err.println("Error saving Item to the database: " + e.getMessage());
+            throw new RuntimeException("Failed to save Item. Please try again later.", e);
+        }
+        catch (Exception e){
+            System.err.println("An unexpected error occurred: " + e.getMessage());
+            throw new RuntimeException("An unexpected error occurred. Please contact support.", e);
+        }
+
+
 
     }
 
@@ -41,6 +56,9 @@ public class ItemServiceImpl implements ItemService {
             tmpUser.get().setItemQty(dto.getItemQty());
             tmpUser.get().setItemUnitPrice(dto.getUnitPrice());
         }
+        else {
+           throw new ItemNotFoundException(itemCode+ " item not found.");
+        }
 
     }
 
@@ -48,7 +66,7 @@ public class ItemServiceImpl implements ItemService {
     public void deleteItem(String itemCode) {
         Optional<ItemEntity> existedUser = itemDao.findById(itemCode);
         if(!existedUser.isPresent()){
-
+            throw new ItemNotFoundException(itemCode+ " item not found.");
         }else {
             itemDao.deleteById(itemCode);
         }
@@ -63,13 +81,16 @@ public class ItemServiceImpl implements ItemService {
         if (itemEntityOptional.isPresent()) {
             return mapping.toItemDto(itemEntityOptional.get());
         } else {
-            throw new RuntimeException("Item with code " + itemCode + " not found");
+            throw new ItemNotFoundException("Item with code " + itemCode + " not found");
         }
     }
 
     @Override
     public List<ItemDto> getItemList() {
         List<ItemEntity> all = itemDao.findAll();
+        if(all.isEmpty()){
+            new ItemNotFoundException("Failed to load");
+        }
         return mapping.asItemDTOList(all);
     }
 }

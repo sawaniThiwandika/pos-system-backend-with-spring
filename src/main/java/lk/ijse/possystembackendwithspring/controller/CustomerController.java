@@ -83,6 +83,7 @@ public class CustomerController {
             customerService.updateCustomer(cusId,customerDto);
         }
        catch (Exception e){
+       e.printStackTrace();
 
        }
 
@@ -90,7 +91,13 @@ public class CustomerController {
     }
     @DeleteMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteCustomer(@PathVariable("customerId") String cusId){
-        customerService.deleteCustomer(cusId);
+        try {
+            customerService.deleteCustomer(cusId);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+
+        }
 
     }
 }

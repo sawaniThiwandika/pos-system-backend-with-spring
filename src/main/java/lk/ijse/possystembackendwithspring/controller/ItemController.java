@@ -22,17 +22,19 @@ public class ItemController {
                                                @RequestPart("_category")String category,
                                                @RequestPart("_itemName")String itemName,
                                                @RequestPart("_itemQty") String itemQty){
-
-        ItemDto itemDto = new ItemDto();
-        itemDto.setItemName(itemName);
-        itemDto.setItemCode(itemCode);
-        itemDto.setItemQty(Integer.valueOf(itemQty));
-        itemDto.setCategory(category);
-        itemDto.setUnitPrice(Double.valueOf(unitPrice));
-        System.out.println(itemDto);
-        itemService.saveItem(itemDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-
+        try {
+            ItemDto itemDto = new ItemDto();
+            itemDto.setItemName(itemName);
+            itemDto.setItemCode(itemCode);
+            itemDto.setItemQty(Integer.valueOf(itemQty));
+            itemDto.setCategory(category);
+            itemDto.setUnitPrice(Double.valueOf(unitPrice));
+            System.out.println(itemDto);
+            itemService.saveItem(itemDto);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
     }
     @GetMapping(value = "/{itemCode}", produces = MediaType.APPLICATION_JSON_VALUE)
