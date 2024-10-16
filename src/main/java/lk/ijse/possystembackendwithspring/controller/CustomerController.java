@@ -2,7 +2,6 @@ package lk.ijse.possystembackendwithspring.controller;
 
 import lk.ijse.possystembackendwithspring.dto.impl.CustomerDto;
 import lk.ijse.possystembackendwithspring.service.CustomerService;
-import org.hibernate.usertype.LoggableUserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +29,24 @@ public class CustomerController {
                                                @RequestPart("_addCusDate") String addCusDate ){
        logger.info("Run the Post method in customer controller");
         logger.trace("init");
+        try {
+            CustomerDto customerDto = new CustomerDto();
+            customerDto.setAddCusDate(String.valueOf(LocalDate.now()));
+            customerDto.setCusAddress(cusAddress);
+            customerDto.setCusContact(cusContact);
+            customerDto.setCusEmail(cusEmail);
+            customerDto.setCusName(cusName);
+            customerDto.setCusId(cusId);
+            System.out.println(customerDto);
 
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setAddCusDate(String.valueOf(LocalDate.now()));
-        customerDto.setCusAddress(cusAddress);
-        customerDto.setCusContact(cusContact);
-        customerDto.setCusEmail(cusEmail);
-        customerDto.setCusName(cusName);
-        customerDto.setCusId(cusId);
-        System.out.println(customerDto);
-        customerService.saveCustomer(customerDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+            customerService.saveCustomer(customerDto);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+       catch (Exception e){
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
+
+
 
 
     }
@@ -64,16 +70,21 @@ public class CustomerController {
                                @RequestPart("_cusAddress")String cusAddress,
                                @RequestPart("_cusContact") String cusContact,
                                @RequestPart("_addCusDate") String addCusDate ){
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setAddCusDate(String.valueOf(LocalDate.now()));
-        customerDto.setCusAddress(cusAddress);
-        customerDto.setCusContact(cusContact);
-        customerDto.setCusEmail(cusEmail);
-        customerDto.setCusName(cusName);
-        customerDto.setCusId(cusId);
-        customerDto.setAddCusDate(addCusDate);
-        System.out.println(customerDto);
-        customerService.updateCustomer(cusId,customerDto);
+        try {
+            CustomerDto customerDto = new CustomerDto();
+            customerDto.setAddCusDate(String.valueOf(LocalDate.now()));
+            customerDto.setCusAddress(cusAddress);
+            customerDto.setCusContact(cusContact);
+            customerDto.setCusEmail(cusEmail);
+            customerDto.setCusName(cusName);
+            customerDto.setCusId(cusId);
+            customerDto.setAddCusDate(addCusDate);
+            System.out.println(customerDto);
+            customerService.updateCustomer(cusId,customerDto);
+        }
+       catch (Exception e){
+
+       }
 
 
     }
