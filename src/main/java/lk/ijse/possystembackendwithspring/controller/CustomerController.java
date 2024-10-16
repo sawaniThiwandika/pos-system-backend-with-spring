@@ -27,10 +27,43 @@ public class CustomerController {
                                                @RequestPart("_cusAddress")String cusAddress,
                                                @RequestPart("_cusContact") String cusContact,
                                                @RequestPart("_addCusDate") String addCusDate ){
-       logger.info("Run the Post method in customer controller");
+
+        if (cusName == null || cusName.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer name is missing");
+        }
+        if (cusEmail == null || cusEmail.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer email is missing");
+        }
+        if (cusAddress == null || cusAddress.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer address is missing");
+        }
+        if (cusContact == null || cusContact.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer contact is missing");
+        }
+        String namePattern = "^[a-zA-Z\\s]+$";
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        String addressPattern = "^[\\w\\s.,#-]+$";
+        String contactPattern = "^\\+?[0-9\\s()-]+$";
+
+
+        if ( !cusName.matches(namePattern)) {
+            return ResponseEntity.badRequest().body("Invalid customer name");
+        }
+        if ( !cusEmail.matches(emailPattern)) {
+            return ResponseEntity.badRequest().body("Invalid customer email");
+        }
+        if ( !cusAddress.matches(addressPattern)) {
+            return ResponseEntity.badRequest().body("Invalid customer address");
+        }
+        if (!cusContact.matches(contactPattern)) {
+            return ResponseEntity.badRequest().body("Invalid customer contact number");
+        }
+
+        logger.info("Run the Post method in customer controller");
         logger.trace("init");
         try {
             CustomerDto customerDto = new CustomerDto();
+
             customerDto.setAddCusDate(String.valueOf(LocalDate.now()));
             customerDto.setCusAddress(cusAddress);
             customerDto.setCusContact(cusContact);
@@ -51,9 +84,15 @@ public class CustomerController {
 
     }
     @GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getCustomer(@PathVariable ("customerId") String cusId){
-
-        return "Success";
+    public ResponseEntity<String> getCustomer(@PathVariable ("customerId") String cusId){
+        if (cusId == null || cusId.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer ID is missing");
+        }
+        String cusIdPattern="^C[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
+        if ( !cusId.matches(cusIdPattern)) {
+            return ResponseEntity.badRequest().body("Invalid customer ID");
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerDto> getCustomerList(){
@@ -64,12 +103,49 @@ public class CustomerController {
 
     }
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void updateCustomer(@RequestPart("_cusId") String cusId,
-                               @RequestPart("_cusName") String cusName,
-                               @RequestPart("_cusEmail")String cusEmail,
-                               @RequestPart("_cusAddress")String cusAddress,
-                               @RequestPart("_cusContact") String cusContact,
-                               @RequestPart("_addCusDate") String addCusDate ){
+    public ResponseEntity<String> updateCustomer(@RequestPart("_cusId") String cusId,
+                                                 @RequestPart("_cusName") String cusName,
+                                                 @RequestPart("_cusEmail")String cusEmail,
+                                                 @RequestPart("_cusAddress")String cusAddress,
+                                                 @RequestPart("_cusContact") String cusContact,
+                                                 @RequestPart("_addCusDate") String addCusDate ){
+        if (cusName == null || cusName.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer name is missing");
+        }
+        if (cusEmail == null || cusEmail.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer email is missing");
+        }
+        if (cusAddress == null || cusAddress.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer address is missing");
+        }
+        if (cusContact == null || cusContact.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer contact is missing");
+        }
+        if (cusId == null || cusContact.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer ID is missing");
+        }
+        String namePattern = "^[a-zA-Z\\s]+$";
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        String addressPattern = "^[\\w\\s.,#-]+$";
+        String contactPattern = "^\\+?[0-9\\s()-]+$";
+        String cusIdPattern="^C[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
+
+        if ( !cusId.matches(cusIdPattern)) {
+            return ResponseEntity.badRequest().body("Invalid customer ID");
+        }
+        if ( !cusName.matches(namePattern)) {
+            return ResponseEntity.badRequest().body("Invalid customer name");
+        }
+        if ( !cusEmail.matches(emailPattern)) {
+            return ResponseEntity.badRequest().body("Invalid customer email");
+        }
+        if ( !cusAddress.matches(addressPattern)) {
+            return ResponseEntity.badRequest().body("Invalid customer address");
+        }
+        if (!cusContact.matches(contactPattern)) {
+            return ResponseEntity.badRequest().body("Invalid customer contact number");
+        }
+
         try {
             CustomerDto customerDto = new CustomerDto();
             customerDto.setAddCusDate(String.valueOf(LocalDate.now()));
@@ -81,23 +157,34 @@ public class CustomerController {
             customerDto.setAddCusDate(addCusDate);
             System.out.println(customerDto);
             customerService.updateCustomer(cusId,customerDto);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
        catch (Exception e){
        e.printStackTrace();
-
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
        }
+
 
 
     }
     @DeleteMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteCustomer(@PathVariable("customerId") String cusId){
+    public ResponseEntity<String> deleteCustomer(@PathVariable("customerId") String cusId){
+        if (cusId == null || cusId.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Customer ID is missing");
+        }
+        String cusIdPattern="^C[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
+        if ( !cusId.matches(cusIdPattern)) {
+            return ResponseEntity.badRequest().body("Invalid customer ID");
+        }
         try {
             customerService.deleteCustomer(cusId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         catch (Exception e){
             e.printStackTrace();
-
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
 
     }
 }
